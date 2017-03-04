@@ -26,7 +26,7 @@ pip install -r requirements.txt
 "Spiders", or Scrapy's web crawlers, are located in recipe_scraper/spiders. To
 run one, cd to the top level of the repository and type this in the shell:
 ```
-scrapy crawl [spider_name] -o [output_filename].json
+scrapy crawl <spider_name> -o <output_filename>.json
 ```
 
 where spider_name is the name of a spider (spider_name attribute within each
