@@ -14,6 +14,7 @@ Have the following installed:
 - pip
 
 To set up:
+
 1. Clone the repository
 2. If desired, set up a Python virtual environment and activate it.
 3. Run the following command to install other dependencies:
