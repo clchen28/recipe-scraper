@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from recipe_scraper.items import RecipeItem
 
 class KoreanbapsangSpider(scrapy.Spider):
     name = "koreanbapsang"
@@ -16,14 +17,12 @@ class KoreanbapsangSpider(scrapy.Spider):
         # Ideally, crawl until you hit a site with the yumprint tags
         recipe = response.css("div.blog-yumprint-recipe-title::text")
         if recipe:
-            yield {
-            'title': recipe.extract_first(),
-            'URL': response.url,
-            'imgURL': response.css("img.blog-yumprint-photo-top-large").xpath('@src').extract_first(),
-            'description': response.css("div.blog-yumprint-recipe-summary::text").extract_first(),
-            'cuisine': 'Korean',
-            'prepTime': None
-            }
+            yield RecipeItem(title = recipe.extract_first(),
+            URL = response.url,
+            imgURL = response.css("img.blog-yumprint-photo-top-large").xpath('@src').extract_first(),
+            description = response.css("div.blog-yumprint-recipe-summary::text").extract_first(),
+            cuisine = 'Korean',
+            prepTime = None)
 
         links = response.css("a.entry-image-link").xpath("@href").extract()
         if links:

@@ -7,8 +7,10 @@
 
 import scrapy
 
-
-class RecipeScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class RecipeItem(scrapy.Item):
+    title = scrapy.Field()
+    URL = scrapy.Field()
+    imgURL = scrapy.Field()
+    description = scrapy.Field()
+    cuisine = scrapy.Field()
+    prepTime = scrapy.Field()
