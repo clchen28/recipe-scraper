@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-
+from recipe_scraper.items import RecipeItem
 
 class TwopeasandtheirpodSpider(scrapy.Spider):
     name = "twopeasandtheirpod"
@@ -11,14 +11,12 @@ class TwopeasandtheirpodSpider(scrapy.Spider):
     def parse(self, response):
         recipe = response.css("div.recipe")
         if recipe:
-            yield {
-            'title': recipe.css("h2").css("span::text").extract_first(),
-            'URL': response.url,
-            'imgURL': recipe.css("div.recipebody").css("img").xpath("@src").extract_first(),
-            'description': recipe.css("div.summary").css("p::text").extract_first(),
-            'cuisine': None,
-            'prepTime': recipe.css("div.time").css("meta[itemprop=totalTime]").xpath("@content").extract_first()
-            }
+            yield RecipeItem(title = recipe.css("h2").css("span::text").extract_first(),
+            URL = response.url,
+            imgURL = recipe.css("div.recipebody").css("img").xpath("@src").extract_first(),
+            description =  recipe.css("div.summary").css("p::text").extract_first(),
+            cuisine = None,
+            prepTime =  recipe.css("div.time").css("meta[itemprop=totalTime]").xpath("@content").extract_first())
         else:
             # archives div contains all blog posts, item div represents a
             # specific post
