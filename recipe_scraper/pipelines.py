@@ -19,7 +19,7 @@ class RecipeScraperPipeline(object):
     def process_item(self, item, spider):
         curRow = self.cursor.execute("SELECT * FROM RECIPES WHERE URL=?",
             (item['URL'],))
-        if (curRow == None):
+        if (curRow.fetchone() == None):
             self.storeItemInDB(item)
         return item
 

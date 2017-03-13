@@ -4,7 +4,15 @@ from recipe_scraper.items import RecipeItem
 
 class KoreanbapsangSpider(scrapy.Spider):
     name = "koreanbapsang"
-    start_urls = ['http://www.koreanbapsang.com/2017/']
+    start_urls = ['http://www.koreanbapsang.com/2017/',
+        'http://www.koreanbapsang.com/2016/',
+        'http://www.koreanbapsang.com/2015/',
+        'http://www.koreanbapsang.com/2014/',
+        'http://www.koreanbapsang.com/2013/',
+        'http://www.koreanbapsang.com/2012/',
+        'http://www.koreanbapsang.com/2011/',
+        'http://www.koreanbapsang.com/2010/',
+        'http://www.koreanbapsang.com/2009/']
 
     def parse(self, response):
         # Each recipe on this level is contained in a div with class "main dish"
