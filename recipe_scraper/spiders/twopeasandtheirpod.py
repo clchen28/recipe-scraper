@@ -27,3 +27,8 @@ class TwopeasandtheirpodSpider(scrapy.Spider):
             if links:
                 for link in links:
                     yield scrapy.Request(link, callback=self.parse)
+
+            # Use CSS selectors to find the next page button
+            nextPage = response.css("div#wp_page_numbers").css("a:contains('>') ::attr(href)").extract_first()
+            if nextPage:
+                yield scrapy.Request(nextPage, callback=self.parse)
