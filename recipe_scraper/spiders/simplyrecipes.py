@@ -30,8 +30,14 @@ class Simplyrecipesspider(scrapy.Spider):
             cuisine = recipeCuisine,
             prepTime = response.css("span.cooktime").xpath("@content").extract_first()
             )
+        else:
+            links = response.css("li.recipe").css("a").xpath("@href").extract()
+            if links:
+                for link in links:
+                    yield scrapy.Request(link, callback=self.parse)
 
-        links = response.css("li.recipe").css("a").xpath("@href").extract()
-        if links:
-            for link in links:
-                yield scrapy.Request(link, callback=self.parse)
+            # If the current page is a navigation page, goes through next page
+            # link until there are no more recipes to scrape
+            nextLink = response.css("a.page-numbers.next").xpath("@href").extract_first()
+            if nextLink:
+                yield scrapy.Request(nextLink, callback=self.parse)
