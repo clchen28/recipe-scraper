@@ -31,8 +31,13 @@ class KoreanbapsangSpider(scrapy.Spider):
             description = response.css("div.blog-yumprint-recipe-summary::text").extract_first(),
             cuisine = 'Korean',
             prepTime = None)
+        else:
+            links = response.css("a.entry-image-link").xpath("@href").extract()
+            if links:
+                for link in links:
+                    yield scrapy.Request(link, callback=self.parse)
 
-        links = response.css("a.entry-image-link").xpath("@href").extract()
-        if links:
-            for link in links:
-                yield scrapy.Request(link, callback=self.parse)
+            # If there is a "next" page on the current listing, scrape it
+            nextLink = response.css("li.pagination-next").css("a").xpath("@href").extract_first()
+            if nextLink:
+                yield scrapy.Request(nextLink, callback=self.parse)
