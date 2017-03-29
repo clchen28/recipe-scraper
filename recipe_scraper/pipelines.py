@@ -17,6 +17,10 @@ class RecipeScraperPipeline(object):
         self.recipeDB.close()
 
     def process_item(self, item, spider):
+        # Convert prep time from "PT##H##M" into minutes
+        if item['prepTime']:
+            item['prepTime'] = parse_prep_time(item['prepTime'])
+
         curRow = self.cursor.execute("SELECT * FROM RECIPES WHERE URL=?",
             (item['URL'],))
         if (curRow.fetchone() == None):
@@ -34,3 +38,28 @@ class RecipeScraperPipeline(object):
         )
 
         self.recipeDB.commit() # Save the changes
+
+
+# Converts "PT#H##M" or similar into total time in minutes, as a string
+def parse_prep_time(pt):
+    # Strip off "PT" 
+    pt = pt[pt.index('PT') + 2:]
+
+    hours = minutes = 0
+    
+    # Times without minutes 
+    if "M" not in pt:
+        # Strip everything after and including the 'H'
+        pt = pt[:pt.index('H')]
+        hours = int(pt)
+    # Times with minutes
+    else:
+        # strip everything after and including the 'M'
+        pt = pt[:pt.index('M')]
+
+        if "H" not in pt:
+            minutes = int(pt)
+        else:
+            (hours, minutes) = [int(s) for s in pt.split('H', 1)]
+
+    return str(hours*60 + minutes)
