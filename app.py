@@ -7,7 +7,7 @@ from sqlalchemy.orm import create_session
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
-engine = create_engine('sqlite:///../recipes.db')
+engine = create_engine('sqlite:///recipes.db')
 metadata = MetaData(bind=engine)
 
 class Recipes(Base):
