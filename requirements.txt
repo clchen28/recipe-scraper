@@ -10,6 +10,7 @@ Flask-RESTful==0.3.5
 gunicorn==19.7.1
 idna==2.2
 incremental==16.10.1
+isodate==0.5.4
 itsdangerous==0.24
 Jinja2==2.9.5
 lxml==3.7.1

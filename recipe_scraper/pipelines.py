@@ -6,6 +6,8 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import sqlite3
+import re
+import isodate
 from recipe_scraper.items import RecipeItem
 
 class RecipeScraperPipeline(object):
@@ -17,6 +19,8 @@ class RecipeScraperPipeline(object):
         self.recipeDB.close()
 
     def process_item(self, item, spider):
+        if item['prepTime']:
+            item['prepTime'] = parse_prep_time(item['prepTime'])
         curRow = self.cursor.execute("SELECT * FROM RECIPES WHERE URL=?",
             (item['URL'],))
         if (curRow.fetchone() == None):
@@ -34,3 +38,16 @@ class RecipeScraperPipeline(object):
         )
 
         self.recipeDB.commit() # Save the changes
+
+def parse_prep_time(pt):
+    mMatch = re.search("[0-9]M", pt)
+
+    # Strips any extraneous text after M
+    if mMatch:
+        pt = pt[0:mMatch.end()]
+
+        # parse_duration method parses ISO 8601 string to a timedelta, and
+        # total_seconds converts to a float
+
+        pt = int(isodate.parse_duration(pt).total_seconds() / 60) # minutes
+        return pt
