@@ -1,0 +1,41 @@
+#page-title{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.top-buffer {
+  margin-top: 30px;
+}
+
+.search-form {
+  width: 50%;
+  float: none;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.small-search-form {
+  width: 22.5%;
+  float: none;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+a {
+  font-weight: bold;
+  color: black;
+}
+
+img {
+  width: auto;
+  height: auto;
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.tiny-form {
+  width: 5%;
+  float: none;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}

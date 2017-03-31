@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous">
+</script>
+<script src="./js/scripts.js"></script>
+<script src="./js/handlebars-v4.0.5.js"></script>
+<script src="https://use.fontawesome.com/b77f7d4ffb.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="./css/styles.css"></link>
+<title>Full Stack of Recipes</title>
+</head>
+<body>
+  <script id="recipe-template" type="text/x-handlebars-template">
+    {{#recipe}}
+    {{{newRow}}}
+    <div class="col-xs-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="text-center">
+            <a href="{{templateURL}}">{{templateTitle}}</a>
+          </div>
+        </div>
+        <div class="panel-body">
+          <img src="{{templateImgURL}}" class="img-responsive center-block">
+        </div>
+        <div class="panel-footer">
+          Cuisine: {{templateCuisine}}
+          <br>
+          Prep Time: {{templatePrepTime}}
+        </div>
+      </div>
+    </div>
+    {{{newRowEnd}}}
+    {{/recipe}}
+  </script>
+
+  <script id="nav-template" type="text/x-handlebars-template">
+    {{#navpane}}
+    <div class="text-center">Showing page {{curPageNum}} of {{totalPages}}</div>
+    <div class="text-center">Go to page <input class="tiny-form" id="page-input" type="text" placeholder="{{curPageNum}}"></input></div>
+    {{/navpane}}
+  </script>
+
+  <div class="container">
+    <div class="row top-buffer">
+      <div class="col-xs-12">
+        <h1 id="page-title">Full Stack of Recipes</h1>
+      </div>
+    </div>
+
+    <!-- Search forms -->
+    <div class="row">
+      <div class="col-xs-7 col-xs-offset-4">
+        <input class="search-form" id="search-recipes" type="text" placeholder="Search recipes..">
+        </input>
+        <button class="icon" id="search-recipes-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <p> -or- </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        I'm feeling like some [Korean, Italian, etc.]...
+      </div>
+      <div class="col-xs-7 col-xs-offset-4">
+        <input class="search-form" id="search-cuisine" type="text">
+        </input>
+        <button class="icon" id="search-cuisine-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <p> -or- </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        How many minutes should this take at most?
+      </div>
+      <div class="col-xs-7 col-xs-offset-4">
+        <input class="search-form" id="search-min" type="text">
+        </input>
+        <button class="icon" id="search-min-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <p> -or- </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        This should take between
+      </div>
+      <div class="col-xs-7 col-xs-offset-4">
+        <input class="small-search-form" id="search-gt" type="text" placeholder="min minutes">
+        </input>
+        and
+        <input class="small-search-form" id="search-lt" type="text" placeholder="max minutes">
+        </input>
+        <button class="icon search-button" id="search-gt-lt-button"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+
+    <!-- Results-->
+    <div id="results">
+    </div>
+
+    <!-- Navigation Bar-->
+    <div id="nav">
+    </div>
+  </div>
+</body>
+</html>
