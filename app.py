@@ -5,6 +5,7 @@ from flask_restful import Resource, Api
 from sqlalchemy import *
 from sqlalchemy.orm import create_session
 from sqlalchemy.ext.declarative import declarative_base
+from flask_cors import CORS, cross_origin
 
 Base = declarative_base()
 engine = create_engine('sqlite:///recipes.db')
@@ -20,6 +21,7 @@ session = create_session(bind=engine)
 
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 class searchRecipeTitle(Resource):
     def get(self, searchTerm):
