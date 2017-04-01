@@ -49,6 +49,32 @@ class searchRecipeTitle(Resource):
         # return JSON data (dict automatically converted to JSON)
         return response
 
+class searchCuisine(Resource):
+    def get(self, searchTerm):
+        searchStr = '%' + searchTerm + '%'
+        # results will be an empty list if the search term is not found
+        results = \
+        session.query(Recipes).filter(Recipes.cuisine.like(searchStr)).all()
+
+        # response is a dict which represents the API's response at this
+        # endpoint
+        response = {}
+        response["count"] = len(results)
+        response["recipes"] = []
+
+        for row in results:
+            rowData = {}
+            rowData["id"] = row.id
+            rowData["title"] = row.title
+            rowData["URL"] = row.URL
+            rowData["imgURL"] = row.imgURL
+            rowData["cuisine"] = row.cuisine
+            rowData["prepTime"] = row.prepTime
+            response["recipes"].append(rowData)
+
+        # return JSON data (dict automatically converted to JSON)
+        return response
+
 class searchPrepTimeLessThan(Resource):
     def get(self, searchTerm):
         searchTerm = int(searchTerm)
@@ -106,6 +132,7 @@ class searchPrepTimeBetween(Resource):
 api.add_resource(searchRecipeTitle, '/api/title/<searchTerm>')
 api.add_resource(searchPrepTimeLessThan, '/api/prepTime/lt/<searchTerm>')
 api.add_resource(searchPrepTimeBetween, '/api/prepTime/gt/<low>/lt/<high>')
+api.add_resource(searchCuisine, '/api/cuisine/<searchTerm>')
 
 if __name__ == '__main__':
      app.run()
